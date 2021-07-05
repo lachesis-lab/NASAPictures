@@ -85,4 +85,9 @@ class MainFragment : Fragment() {
     private fun toast(text: String) {
         Toast.makeText(requireContext(), text, Toast.LENGTH_LONG).show()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding=null
+    }
 }
