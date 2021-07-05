@@ -45,7 +45,7 @@ class MainFragment : Fragment() {
         viewModel.getData()
             .observe(this@MainFragment.viewLifecycleOwner, Observer<AppState> { renderData(it) })
         bottomSheetBehavior =
-            BottomSheetBehavior.from(view.findViewById(R.id.bottom_sheet_container))
+            BottomSheetBehavior.from(binding.includeBottomSheetLayout.bottomSheetContainer)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
@@ -55,6 +55,7 @@ class MainFragment : Fragment() {
             is AppState.Success -> {
                 val responseData = appState.serverResponseData
                 val url = responseData.url
+                binding.includeLoadingLayout.loadingLayout.visibility=View.GONE
                 if (url.isNullOrEmpty())
                     toast("Link is empty")
                 else {
@@ -64,15 +65,16 @@ class MainFragment : Fragment() {
                         placeholder(R.drawable.ic_no_photo_vector)
 
                     }
-                    requireActivity().findViewById<TextView>(R.id.bottom_sheet_header).text =
-                        responseData.title
-                    requireActivity().findViewById<TextView>(R.id.bottom_sheet_text).text =
-                        responseData.explanation
+                    binding.includeBottomSheetLayout.bottomSheetHeader.text = responseData.title
+                    binding.includeBottomSheetLayout.bottomSheetText.text = responseData.explanation
 
                 }
 
             }
-            is AppState.Error ->{
+            is AppState.Loading -> {
+                binding.includeLoadingLayout.loadingLayout.visibility=View.VISIBLE
+            }
+            is AppState.Error -> {
                 toast(appState.error.message!!)
 
             }
@@ -81,6 +83,6 @@ class MainFragment : Fragment() {
     }
 
     private fun toast(text: String) {
-        Toast.makeText(requireContext(), text , Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), text, Toast.LENGTH_LONG).show()
     }
 }
