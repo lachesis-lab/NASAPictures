@@ -3,4 +3,5 @@
     <string name="input_layout_hint">Найти в Википедии</string>
     <string name="input_layout_helper_text">Поищите термин в Википедии</string>
     <string name="photo_of_the_day_stub">photo of the day</string>
+    <string name="item_settings_title">Настройки</string>
 </resources>

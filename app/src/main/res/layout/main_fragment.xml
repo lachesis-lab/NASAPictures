@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -51,7 +52,9 @@
 
             <include
                 android:id="@+id/include_loading_layout"
-                layout = "@layout/loading_layout"/>
+                layout="@layout/loading_layout"
+                tools:layout_editor_absoluteX="108dp"
+                tools:layout_editor_absoluteY="335dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -66,7 +69,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:backgroundTint="@color/colorPrimary"
         app:fabAlignmentMode="center"
         app:hideOnScroll="true"
         app:layout_scrollFlags="scroll|enterAlways"
