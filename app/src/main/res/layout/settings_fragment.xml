@@ -13,7 +13,6 @@
         android:id="@+id/theme_chip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Темная тема"
         style="@style/Widget.MaterialComponents.Chip.Choice"/>
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
     <style name="Theme.NASAPictures" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
@@ -13,6 +14,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="bottomAppBarStyle">@style/MyBottomAppBarStyle</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
 
     <style name="Theme.NASAPicturesDark" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -27,13 +29,27 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="">@color/teal_200</item>
         <item name="bottomAppBarStyle">@style/MyBottomAppBarStyleDark</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
 
     <style name="MyBottomAppBarStyle" parent="Widget.MaterialComponents.BottomAppBar.Colored">
-        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="backgroundTint">@color/colorAccent</item>
     </style>
+
     <style name="MyBottomAppBarStyleDark" parent="Widget.MaterialComponents.BottomAppBar.Colored">
         <item name="backgroundTint">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="MyActionBar" parent="Widget.MaterialComponents.ActionBar.Primary">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:titleTextStyle">@style/MyTextAppearance</item>
+    </style>
+
+    <style name="MyTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>
