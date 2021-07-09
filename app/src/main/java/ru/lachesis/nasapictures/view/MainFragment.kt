@@ -60,7 +60,7 @@ class MainFragment : Fragment() {
     }
     private fun setBottomMenu() {
         val bottomAppBar = requireActivity().findViewById<BottomAppBar>(R.id.bottom_app_bar)
-        bottomAppBar.inflateMenu(R.menu.bottom_menu)
+//        bottomAppBar.inflateMenu(R.menu.bottom_menu)
 
     }
 
