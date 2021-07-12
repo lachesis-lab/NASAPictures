@@ -7,6 +7,7 @@ import retrofit2.http.Query
 interface NASAApi {
     @GET("planetary/apod")
     fun getPictureData(
+        @Query("date") date:String,
         @Query("api_key") apikey:String
     ): Call<PictureData>
 }

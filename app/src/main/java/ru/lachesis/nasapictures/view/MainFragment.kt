@@ -7,16 +7,18 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import coil.api.load
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.lachesis.nasapictures.R
 import ru.lachesis.nasapictures.app.AppState
 import ru.lachesis.nasapictures.databinding.MainFragmentBinding
 import ru.lachesis.nasapictures.viewmodel.MainViewModel
+import java.util.*
 
 class MainFragment : Fragment() {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+    val viewPagerAdapter= MainViewPagerAdapter(childFragmentManager)
     private var _binding: MainFragmentBinding? = null
     private val binding: MainFragmentBinding
         get() = _binding!!
@@ -33,6 +35,14 @@ class MainFragment : Fragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val viewPager :ViewPager2 = binding.viewPager
+        viewPager.adapter  = viewPagerAdapter
+        binding.tabLayout.setupWithViewPager(viewPager)
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +57,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         setBottomMenu()
-        viewModel.getData()
+        viewModel.getData(Calendar.getInstance())
             .observe(this@MainFragment.viewLifecycleOwner, Observer<AppState> { renderData(it) })
         bottomSheetBehavior =
             BottomSheetBehavior.from(binding.includeBottomSheetLayout.bottomSheetContainer)
@@ -84,12 +94,12 @@ class MainFragment : Fragment() {
                 if (url.isNullOrEmpty())
                     toast("Link is empty")
                 else {
-                    binding.picture.load(url) {
-                        lifecycle(this@MainFragment)
-                        error(R.drawable.ic_load_error_vector)
-                        placeholder(R.drawable.ic_no_photo_vector)
-
-                    }
+//                    binding.picture.load(url) {
+//                        lifecycle(this@MainFragment)
+//                        error(R.drawable.ic_load_error_vector)
+//                        placeholder(R.drawable.ic_no_photo_vector)
+//
+//                    }
                     binding.includeBottomSheetLayout.bottomSheetHeader.text = responseData.title
                     binding.includeBottomSheetLayout.bottomSheetText.text = responseData.explanation
 

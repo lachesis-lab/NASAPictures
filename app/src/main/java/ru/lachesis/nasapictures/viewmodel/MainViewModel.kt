@@ -11,6 +11,7 @@ import ru.lachesis.nasapictures.app.AppState
 import ru.lachesis.nasapictures.model.PictureData
 import ru.lachesis.nasapictures.model.RetrofitDataRepositoryImpl
 import ru.lachesis.nasapictures.model.RetrofitDataSource
+import java.util.*
 
 class MainViewModel(
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
@@ -20,12 +21,12 @@ class MainViewModel(
     private val apikey = BuildConfig.NASA_API_KEY
     fun getLiveData() = liveDataToObserve
 
-    fun getData(): LiveData<AppState> {
+    fun getData(date: Calendar): LiveData<AppState> {
         liveDataToObserve.value = AppState.Loading(null)
         if (apikey.isBlank()) {
             AppState.Error(Error("You need API key"))
         } else {
-            retrofitDataRepositoryImpl.getRemoteData(apikey, object : Callback<PictureData> {
+            retrofitDataRepositoryImpl.getRemoteData(date, apikey, object : Callback<PictureData> {
                 override fun onResponse(call: Call<PictureData>, response: Response<PictureData>) {
                     if (response.isSuccessful && response.body() != null) {
                         liveDataToObserve.value = AppState.Success(response.body()!!)
