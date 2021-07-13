@@ -50,12 +50,15 @@ class MainFragment : Fragment() {
 //        return inflater.inflate(R.layout.main_fragment,container,false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         setBottomMenu()
-        viewModel.getData(Calendar.getInstance())
-            .observe(this@MainFragment.viewLifecycleOwner, Observer<AppState> { renderData(it) })
+        viewModel.getLiveData().observe(this@MainFragment.viewLifecycleOwner,  { renderData(it)})
+//        viewModel.getData(Calendar.getInstance())
+//            .observe(this@MainFragment.viewLifecycleOwner, Observer<AppState> { renderData(it) })
+
         bottomSheetBehavior =
             BottomSheetBehavior.from(binding.includeBottomSheetLayout.bottomSheetContainer)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -92,7 +95,7 @@ class MainFragment : Fragment() {
             is AppState.Success -> {
                 val responseData = appState.serverResponseData
                 val url = responseData.url
-                binding.includeLoadingLayout.loadingLayout.visibility = View.GONE
+//                binding.includeLoadingLayout.loadingLayout.visibility = View.GONE
                 if (url.isNullOrEmpty())
                     toast("Link is empty")
                 else {
@@ -108,13 +111,13 @@ class MainFragment : Fragment() {
                 }
 
             }
-            is AppState.Loading -> {
-                binding.includeLoadingLayout.loadingLayout.visibility = View.VISIBLE
-            }
-            is AppState.Error -> {
-                toast(appState.error.message!!)
-
-            }
+//            is AppState.Loading -> {
+//                binding.includeLoadingLayout.loadingLayout.visibility = View.VISIBLE
+//            }
+//            is AppState.Error -> {
+//                toast(appState.error.message!!)
+//
+//            }
 
         }
     }

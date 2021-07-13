@@ -24,15 +24,11 @@ class PictureFragment: Fragment() {
         const val BUNDLE_EXTRA = "dateOffset"
         fun newInstance(offset:Int): PictureFragment {
             val args = Bundle()
-            args.putInt(BUNDLE_EXTRA,offset-3)
+            args.putInt(BUNDLE_EXTRA,offset-2)
             val fragment = PictureFragment()
             fragment.arguments = args
             return fragment
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -58,7 +54,7 @@ class PictureFragment: Fragment() {
             is AppState.Success -> {
                 val responseData = appState.serverResponseData
                 val url = responseData.url
-//                binding.includeLoadingLayout.loadingLayout.visibility = View.GONE
+                binding.includeLoadingLayout.loadingLayout.visibility = View.GONE
                 if (url.isNullOrEmpty())
                     toast("Link is empty")
                 else {
@@ -74,9 +70,9 @@ class PictureFragment: Fragment() {
                 }
 
             }
-//            is AppState.Loading -> {
-//                binding.includeLoadingLayout.loadingLayout.visibility = View.VISIBLE
-//            }
+            is AppState.Loading -> {
+                binding.includeLoadingLayout.loadingLayout.visibility = View.VISIBLE
+            }
             is AppState.Error -> {
                 toast(appState.error.message!!)
 
