@@ -35,7 +35,7 @@ class RetrofitDataSource {
     }
 
     fun getRetrofitData(date: java.util.Calendar, apikey:String, callback: Callback<PictureData>){
-        val dateFormat= java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val dateFormat= java.text.SimpleDateFormat("yyyy-MM-dd", Locale.ROOT)
         pictureData.getPictureData(dateFormat.format(date.time),apikey).enqueue(callback)
     }
 

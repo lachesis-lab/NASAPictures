@@ -5,15 +5,22 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-class MainViewPagerAdapter(private val fragmentManager: FragmentManager): FragmentStatePagerAdapter(fragmentManager) {
+class MainViewPagerAdapter(private val fragmentManager: FragmentManager) :
+    FragmentStatePagerAdapter(fragmentManager) {
 
-    override fun getCount(): Int {
-        return 3
-    }
+    override fun getCount(): Int = 3
 
     override fun getItem(position: Int): Fragment {
-        val bundle = Bundle()
-        bundle.putInt(PictureFragment.BUNDLE_EXTRA,position-1)
-        return PictureFragment.newInstance(bundle)
+        return  PictureFragment.newInstance(position)
     }
+
+    override fun getPageTitle(position: Int): CharSequence? {
+        when (position) {
+            0 -> return "Позавчера"
+            1 -> return "Вчера"
+            2 -> return "Сегодня"
+        }
+        return ""
+    }
+
 }

@@ -15,16 +15,16 @@ import ru.lachesis.nasapictures.viewmodel.MainViewModel
 import java.util.*
 
 class PictureFragment: Fragment() {
-    private var dateOffset =0
+    private var dateOffset: Int =0
     private var _binding: PictureFragmentBinding? = null
     private val binding: PictureFragmentBinding get() = _binding!!
     private val viewModel: MainViewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
 
     companion object{
         const val BUNDLE_EXTRA = "dateOffset"
-        fun newInstance(bundle:Bundle?): PictureFragment {
+        fun newInstance(offset:Int): PictureFragment {
             val args = Bundle()
-
+            args.putInt(BUNDLE_EXTRA,offset-3)
             val fragment = PictureFragment()
             fragment.arguments = args
             return fragment
@@ -33,9 +33,6 @@ class PictureFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (savedInstanceState != null){
-            dateOffset = savedInstanceState.getInt(BUNDLE_EXTRA,0)
-        }
     }
 
     override fun onCreateView(
@@ -43,16 +40,15 @@ class PictureFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dateInstance = Calendar.getInstance()
-        dateInstance.add(Calendar.DAY_OF_MONTH,dateOffset)
-        viewModel.getData(dateInstance)
         _binding = PictureFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val liveData = MainViewModel().getLiveData().observe(viewLifecycleOwner,{renderData(it)})
-
+        dateOffset = arguments?.getInt(BUNDLE_EXTRA,0)!!
+        val dateInstance = Calendar.getInstance()
+        dateInstance.add(Calendar.DAY_OF_MONTH,dateOffset)
+        viewModel.getData(dateInstance).observe(viewLifecycleOwner,{renderData(it)})
     }
 
 

@@ -18,7 +18,7 @@ import java.util.*
 
 class MainFragment : Fragment() {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-    val viewPagerAdapter= MainViewPagerAdapter(childFragmentManager)
+
     private var _binding: MainFragmentBinding? = null
     private val binding: MainFragmentBinding
         get() = _binding!!
@@ -37,9 +37,6 @@ class MainFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewPager :ViewPager2 = binding.viewPager
-        viewPager.adapter  = viewPagerAdapter
-        binding.tabLayout.setupWithViewPager(viewPager)
 
     }
 
@@ -62,6 +59,11 @@ class MainFragment : Fragment() {
         bottomSheetBehavior =
             BottomSheetBehavior.from(binding.includeBottomSheetLayout.bottomSheetContainer)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        val viewPagerAdapter =MainViewPagerAdapter(childFragmentManager)
+        val viewPager  = binding.viewPager
+        viewPager.adapter  = viewPagerAdapter
+        binding.tabLayout.setupWithViewPager(viewPager)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
