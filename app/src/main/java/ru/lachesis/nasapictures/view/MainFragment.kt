@@ -1,12 +1,14 @@
 package ru.lachesis.nasapictures.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -23,7 +25,8 @@ class MainFragment : Fragment() {
     private val binding: MainFragmentBinding
         get() = _binding!!
     private val viewModel: MainViewModel by lazy {
-        ViewModelProviders.of(this).get(MainViewModel::class.java)
+//        ViewModelProviders.of(this).get(MainViewModel::class.java)
+        ViewModelProviders.of(requireActivity()).get(MainViewModel::class.java)
     }
 
     companion object {
@@ -35,10 +38,6 @@ class MainFragment : Fragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,10 +63,33 @@ class MainFragment : Fragment() {
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         val viewPagerAdapter =MainViewPagerAdapter(childFragmentManager)
         val viewPager  = binding.viewPager
+        viewPager.offscreenPageLimit=0
         viewPager.adapter  = viewPagerAdapter
         binding.tabLayout.setupWithViewPager(viewPager)
+        viewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int,
+            ) {
+ //               viewPager.currentItem=position// .setCurrentItem(position,true)
+            }
+
+            override fun onPageSelected(position: Int) {
+                Log.d("SelectedPosition",position.toString())
+//                viewPagerAdapter.getItem(viewPagerAdapter.items[position].id)
+                viewPager.currentItem=position
+                viewPagerAdapter.notifyDataSetChanged()
+            // .setCurrentItem(position,true)
+//                viewPagerAdapter.getItem(position)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+        })
 
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)

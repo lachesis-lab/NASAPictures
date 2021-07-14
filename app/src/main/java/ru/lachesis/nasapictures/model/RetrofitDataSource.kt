@@ -4,6 +4,7 @@ import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.icu.util.LocaleData
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -35,7 +36,8 @@ class RetrofitDataSource {
     }
 
     fun getRetrofitData(date: java.util.Calendar, apikey:String, callback: Callback<PictureData>){
-        val dateFormat= java.text.SimpleDateFormat("yyyy-MM-dd", Locale.ROOT)
+        val dateFormat= java.text.SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        Log.d("RetroDatePosition",dateFormat.format(date.time))
         pictureData.getPictureData(dateFormat.format(date.time),apikey).enqueue(callback)
     }
 

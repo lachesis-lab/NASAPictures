@@ -18,7 +18,7 @@ class PictureFragment: Fragment() {
     private var dateOffset: Int =0
     private var _binding: PictureFragmentBinding? = null
     private val binding: PictureFragmentBinding get() = _binding!!
-    private val viewModel: MainViewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
+    private val viewModel: MainViewModel by lazy { ViewModelProviders.of(requireActivity()).get(MainViewModel::class.java) }
 
     companion object{
         const val BUNDLE_EXTRA = "dateOffset"
