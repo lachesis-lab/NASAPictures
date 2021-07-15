@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layoutDescription="@xml/picture_fragment_scene">
     <ru.lachesis.nasapictures.util.EquilateralImageView
         android:id="@+id/picture"
         android:layout_width="match_parent"
@@ -18,5 +20,5 @@
         android:id="@+id/include_loading_layout"
         layout="@layout/loading_layout" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
 

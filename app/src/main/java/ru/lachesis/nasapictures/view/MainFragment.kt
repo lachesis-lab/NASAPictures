@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.tabs.TabLayout
 import ru.lachesis.nasapictures.R
 import ru.lachesis.nasapictures.app.AppState
 import ru.lachesis.nasapictures.databinding.MainFragmentBinding
@@ -63,9 +64,26 @@ class MainFragment : Fragment() {
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         val viewPagerAdapter =MainViewPagerAdapter(childFragmentManager)
         val viewPager  = binding.viewPager
+        val tabLayout = binding.tabLayout
         viewPager.offscreenPageLimit=0
         viewPager.adapter  = viewPagerAdapter
+//        viewPagerAdapter.obs
         binding.tabLayout.setupWithViewPager(viewPager)
+/*
+        tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                Log.d("SelectedPosition",tabLayout.selectedTabPosition.toString())
+//                viewPagerAdapter.getItem(viewPagerAdapter.items[position].id)
+                viewPagerAdapter.getRegisteredItem(tabLayout.selectedTabPosition)// currentItem=position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+*/
         viewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
             override fun onPageScrolled(
                 position: Int,
@@ -77,9 +95,10 @@ class MainFragment : Fragment() {
 
             override fun onPageSelected(position: Int) {
                 Log.d("SelectedPosition",position.toString())
+                viewPagerAdapter.instantiateItem(viewPager,position)
 //                viewPagerAdapter.getItem(viewPagerAdapter.items[position].id)
-                viewPager.currentItem=position
-                viewPagerAdapter.notifyDataSetChanged()
+//                viewPagerAdapter.getRegisteredItem(viewPager,viewPager.currentItem)// currentItem=position
+//                viewPagerAdapter.notifyDataSetChanged()
             // .setCurrentItem(position,true)
 //                viewPagerAdapter.getItem(position)
             }
