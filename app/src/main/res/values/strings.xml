@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">NASAPictures</string>
+    <string name="input_layout_hint">Найти в Википедии</string>
+    <string name="input_layout_helper_text">Поищите термин в Википедии</string>
+    <string name="photo_of_the_day_stub">photo of the day</string>
+    <string name="item_settings_title">Настройки</string>
+    <string name="theme_chip_text_light">Светлая тема</string>
+    <string name="theme_chip_text_dark">Темная тема</string>
+    <string name="animation_title">Анимация</string>
+</resources>
