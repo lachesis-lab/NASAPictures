@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.tabs.TabLayout
 import ru.lachesis.nasapictures.R
 import ru.lachesis.nasapictures.app.AppState
 import ru.lachesis.nasapictures.databinding.MainFragmentBinding
@@ -55,18 +53,18 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         setBottomMenu()
-        viewModel.getLiveData().observe(this@MainFragment.viewLifecycleOwner,  { renderData(it)})
+        viewModel.getLiveData().observe(this@MainFragment.viewLifecycleOwner, { renderData(it) })
 //        viewModel.getData(Calendar.getInstance())
 //            .observe(this@MainFragment.viewLifecycleOwner, Observer<AppState> { renderData(it) })
 
         bottomSheetBehavior =
             BottomSheetBehavior.from(binding.includeBottomSheetLayout.bottomSheetContainer)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        val viewPagerAdapter =MainViewPagerAdapter(childFragmentManager)
-        val viewPager  = binding.viewPager
+        val viewPagerAdapter = MainViewPagerAdapter(childFragmentManager)
+        val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
-        viewPager.offscreenPageLimit=0
-        viewPager.adapter  = viewPagerAdapter
+        viewPager.offscreenPageLimit = 0
+        viewPager.adapter = viewPagerAdapter
 //        viewPagerAdapter.obs
         binding.tabLayout.setupWithViewPager(viewPager)
 /*
@@ -84,22 +82,22 @@ class MainFragment : Fragment() {
             }
         })
 */
-        viewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
                 positionOffsetPixels: Int,
             ) {
- //               viewPager.currentItem=position// .setCurrentItem(position,true)
+                //               viewPager.currentItem=position// .setCurrentItem(position,true)
             }
 
             override fun onPageSelected(position: Int) {
-                Log.d("SelectedPosition",position.toString())
-                viewPagerAdapter.instantiateItem(viewPager,position)
+                Log.d("SelectedPosition", position.toString())
+                viewPagerAdapter.instantiateItem(viewPager, position)
 //                viewPagerAdapter.getItem(viewPagerAdapter.items[position].id)
 //                viewPagerAdapter.getRegisteredItem(viewPager,viewPager.currentItem)// currentItem=position
 //                viewPagerAdapter.notifyDataSetChanged()
-            // .setCurrentItem(position,true)
+                // .setCurrentItem(position,true)
 //                viewPagerAdapter.getItem(position)
             }
 
@@ -112,20 +110,33 @@ class MainFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.bottom_menu,menu)
+        inflater.inflate(R.menu.settings_menu, menu)
     }
+
     private fun setBottomMenu() {
-        val bottomAppBar = requireActivity().findViewById<BottomAppBar>(R.id.bottom_app_bar)
+        val activity = requireActivity() as AppCompatActivity
+        val bottomAppBar = activity.findViewById<BottomAppBar>(R.id.bottom_app_bar)
+
+        activity.setSupportActionBar(bottomAppBar)
+        bottomAppBar.inflateMenu(R.menu.settings_menu)
 //        bottomAppBar.inflateMenu(R.menu.bottom_menu)
 
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.item_settings){
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.main_container,SettingsFragment.newInstance(),"")
-                ?.addToBackStack(null)
-                ?.commit()
+        when (item.itemId) {
+            R.id.item_settings ->
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.replace(R.id.main_container, SettingsFragment.newInstance(), "")
+                    ?.addToBackStack(null)
+                    ?.commit()
+            R.id.animation_item->
+                activity?.supportFragmentManager
+                    ?.beginTransaction()
+                    ?.replace(R.id.main_container,AnimationFragment.newInstance(),"")
+                    ?.addToBackStack(null)
+                    ?.commit()
+
         }
         return super.onOptionsItemSelected(item)
     }
