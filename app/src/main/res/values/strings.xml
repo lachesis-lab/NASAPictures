@@ -7,4 +7,5 @@
     <string name="theme_chip_text_light">Светлая тема</string>
     <string name="theme_chip_text_dark">Темная тема</string>
     <string name="animation_title">Анимация</string>
+    <string name="notes_title">Заметки</string>
 </resources>

@@ -110,7 +110,7 @@ class MainFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.settings_menu, menu)
+        inflater.inflate(R.menu.additional_menu, menu)
     }
 
     private fun setBottomMenu() {
@@ -118,7 +118,7 @@ class MainFragment : Fragment() {
         val bottomAppBar = activity.findViewById<BottomAppBar>(R.id.bottom_app_bar)
 
         activity.setSupportActionBar(bottomAppBar)
-        bottomAppBar.inflateMenu(R.menu.settings_menu)
+        bottomAppBar.inflateMenu(R.menu.additional_menu)
 //        bottomAppBar.inflateMenu(R.menu.bottom_menu)
 
     }
@@ -137,6 +137,12 @@ class MainFragment : Fragment() {
                     ?.addToBackStack(null)
                     ?.commit()
 
+            R.id.notes_item->
+                activity?.supportFragmentManager
+                    ?.beginTransaction()
+                    ?.replace(R.id.main_container,NotesFragment.newInstance(),"")
+                    ?.addToBackStack(null)
+                    ?.commit()
         }
         return super.onOptionsItemSelected(item)
     }
