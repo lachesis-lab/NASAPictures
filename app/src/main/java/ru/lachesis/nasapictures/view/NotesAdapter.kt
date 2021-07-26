@@ -19,7 +19,6 @@ class NotesAdapter(
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.notes_item, parent, false)
         binding = NotesItemBinding.bind(itemView)
-        NotesItemBinding.bind(itemView)
         return NotesViewHolder(itemView)
     }
 

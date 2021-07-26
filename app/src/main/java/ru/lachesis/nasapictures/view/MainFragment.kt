@@ -1,8 +1,17 @@
 package ru.lachesis.nasapictures.view
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -163,7 +172,7 @@ class MainFragment : Fragment() {
 //                        placeholder(R.drawable.ic_no_photo_vector)
 //
 //                    }
-                    binding.includeBottomSheetLayout.bottomSheetHeader.text = responseData.title
+                    setSpans(binding.includeBottomSheetLayout.bottomSheetHeader,responseData.title!!)
                     binding.includeBottomSheetLayout.bottomSheetText.text = responseData.explanation
 
                 }
@@ -180,10 +189,32 @@ class MainFragment : Fragment() {
         }
     }
 
+
     private fun toast(text: String) {
         Toast.makeText(requireContext(), text, Toast.LENGTH_LONG).show()
     }
 
+    fun setSpans(view: TextView,text:String){
+        val clickableSpan: ClickableSpan = object : ClickableSpan(){
+            override fun onClick(widget: View) {
+                toast("Test clickable span")
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isAntiAlias =true
+            }
+        }
+        val boldItalicStyle = StyleSpan(Typeface.BOLD_ITALIC)
+        val spannable = SpannableString(text)
+        spannable.setSpan(boldItalicStyle,0,text.length-1,SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable.setSpan(ForegroundColorSpan(Color.RED),0,1,SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable.setSpan(clickableSpan,1,text.length,SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+        view.movementMethod = LinkMovementMethod()
+        view.setText(spannable,TextView.BufferType.SPANNABLE)
+
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
