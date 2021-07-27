@@ -202,16 +202,17 @@ class MainFragment : Fragment() {
 
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
-                ds.isAntiAlias =true
+                ds.color = Color.MAGENTA
             }
         }
         val boldItalicStyle = StyleSpan(Typeface.BOLD_ITALIC)
         val spannable = SpannableString(text)
         spannable.setSpan(boldItalicStyle,0,text.length-1,SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.setSpan(ForegroundColorSpan(Color.RED),0,1,SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
         spannable.setSpan(clickableSpan,1,text.length,SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable.setSpan(ForegroundColorSpan(Color.RED),0,1,SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
         view.movementMethod = LinkMovementMethod()
         view.setText(spannable,TextView.BufferType.SPANNABLE)
+//        view.setHighlightColor (Color.TRANSPARENT);
 
 
     }
